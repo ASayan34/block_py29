@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 
 from applications.account.utils import send_activation_code
 
@@ -29,3 +29,21 @@ class RegisterSerializer(serializers.ModelSerializer):
         send_activation_code(user.email, user.activation_code)
         return user
 
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True)
+
+    def validate_email(self, email):
+        if User.objects.filter(email=email).exists(): # exists() -> [user1, user2] - queryset 
+            return email
+        raise serializers.ValidationError('Нет такого пользователя')
+    
+    def validate(self, attrs):
+        user = authenticate(username=attrs.get('email'), password=attrs.get('password'))
+        if not user:
+            raise serializers.ValidationError('Неверный пароль!')
+        attrs['user'] = user
+        return attrs
+        
+    
