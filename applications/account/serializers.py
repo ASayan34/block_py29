@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
+from rest_framework.response import Response
 
 from applications.account.utils import send_activation_code
 
@@ -45,5 +46,5 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError('Неверный пароль!')
         attrs['user'] = user
         return attrs
-        
     
+

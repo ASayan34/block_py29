@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.permissions import IsAuthenticated
 
 from applications.account.serializers import RegisterSerializer, LoginSerializer
 
@@ -33,3 +34,22 @@ class ActivationAPIView(APIView):
 
 class LoginAPIView(ObtainAuthToken):
     serializer_class = LoginSerializer
+    
+
+class LogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request): # разлогин дз
+        request.user.auth_token.delete()
+        
+        return Response('Пользователь успешно вышел из системы')
+
+
+class ChangePasswordAPIView(APIView):
+    def post(self, request): # смена пароля
+        ...    
+        
+
+   
+# TODO: реализовать ForgotPassword
+
