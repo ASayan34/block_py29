@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
 
 from applications.account.serializers import RegisterSerializer, LoginSerializer
 
@@ -40,7 +41,9 @@ class LogoutAPIView(APIView):
     permission_classes = [IsAuthenticated]
     
     def post(self, request): # разлогин дз
-        request.user.auth_token.delete()
+        user = get_object_or_404(Token, user=request.user)
+        user.delete()
+        # request.user.auth_token.delete()
         
         return Response('Пользователь успешно вышел из системы')
 
