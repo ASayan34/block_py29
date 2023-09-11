@@ -33,24 +33,24 @@ class ActivationAPIView(APIView):
         return Response('Успешно', status=200)
     
 
-class LoginAPIView(ObtainAuthToken):
-    serializer_class = LoginSerializer
+# class LoginAPIView(ObtainAuthToken):
+#     serializer_class = LoginSerializer
     
 
-class LogoutAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+# class LogoutAPIView(APIView):
+#     permission_classes = [IsAuthenticated]
     
-    def post(self, request): # разлогин дз
-        user = get_object_or_404(Token, user=request.user)
-        user.delete()
-        # request.user.auth_token.delete()
+#     def post(self, request): # разлогин дз
+#         user = get_object_or_404(Token, user=request.user)
+#         user.delete()
+#         # request.user.auth_token.delete()
         
-        return Response('Пользователь успешно вышел из системы')
+#         return Response('Пользователь успешно вышел из системы')
 
 
-class ChangePasswordAPIView(APIView):
-    def post(self, request): # смена пароля
-        ...    
+# class ChangePasswordAPIView(APIView):
+#     def post(self, request): # смена пароля
+#         ...    
         
 
    

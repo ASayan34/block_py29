@@ -10,6 +10,7 @@ class CustomUserManager(UserManager):
             raise ValueError("The given email must be set")
         email = self.normalize_email(email)
 
+        # username = GlobalUserModel.normalize_username(username)
         user = self.model(email=email, **extra_fields)
         user.create_activation_code()
         user.password = make_password(password)
@@ -24,7 +25,6 @@ class CustomUserManager(UserManager):
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("is_active", True)
 
         if extra_fields.get("is_staff") is not True:
             raise ValueError("Superuser must have is_staff=True.")

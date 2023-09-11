@@ -7,7 +7,7 @@ User = get_user_model()
 class Post(models.Model):
     """
         Это модель постов
-    """
+    """ 
     
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='posts', verbose_name='Владелец поста'
